@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:image/image.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/src/image/color_space_type.dart';
@@ -47,8 +49,8 @@ class ImageConversions {
     final image = Image.fromBytes(
         width: grayscale.getWidth(shape),
         height: grayscale.getHeight(shape),
-        bytes: Uint8List.fromList(uint8Buffer.getIntList()),
-        format: Format.l8);
+        bytes: Uint8List.fromList(uint8Buffer.getIntList()).buffer,
+        format: Format.float32);
 
     return image;
   }
