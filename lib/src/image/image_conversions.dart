@@ -47,8 +47,8 @@ class ImageConversions {
     final image = Image.fromBytes(
         width: grayscale.getWidth(shape),
         height: grayscale.getHeight(shape),
-        bytes: uint8Buffer.getBuffer().asUint8List(),
-        format: Format.luminance);
+        bytes: Uint8List.fromList(uint8Buffer.getIntList()),
+        format: Format.l8);
 
     return image;
   }
