@@ -21,22 +21,40 @@ class ImageContainer extends BaseImageContainer {
   BaseImageContainer clone() {
     return create(_image.clone());
   }
+  // @override
+  // ColorSpaceType get colorSpaceType {
+  //   int len = _image.data.length;
+  //   bool isGrayscale = true;
+  //   for (int i = (len / 4).floor(); i < _image.data.length; i++) {
+  //     if (_image.data[i] != 0) {
+  //       isGrayscale = false;
+  //       break;
+  //     }
+  //   }
+  //   if (isGrayscale) {
+  //     return ColorSpaceType.GRAYSCALE;
+  //   } else {
+  //     return ColorSpaceType.RGB;
+  //   }
+  // }
 
   @override
   ColorSpaceType get colorSpaceType {
-    int len = _image.data.length;
+    // `_image.data` が null の場合、RGB をデフォルトとする
+    final List<int> data = (_image.data as List<int>?) ?? [];
+    if (data.isEmpty) {
+      return ColorSpaceType.RGB;
+    }
+
     bool isGrayscale = true;
-    for (int i = (len / 4).floor(); i < _image.data.length; i++) {
-      if (_image.data[i] != 0) {
+    for (int i = 0; i < data.length; i++) {
+      if (data[i] != data[i ~/ 4 * 4]) { // R/G/B が異なるかチェック
         isGrayscale = false;
         break;
       }
     }
-    if (isGrayscale) {
-      return ColorSpaceType.GRAYSCALE;
-    } else {
-      return ColorSpaceType.RGB;
-    }
+
+    return isGrayscale ? ColorSpaceType.GRAYSCALE : ColorSpaceType.RGB;
   }
 
   @override
