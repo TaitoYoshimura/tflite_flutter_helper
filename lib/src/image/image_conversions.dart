@@ -83,7 +83,6 @@ class ImageConversions {
           floatArr[j++] = bytes[i + 2].toDouble(); // B
         }
         buffer.loadList(floatArr, shape: shape);
-        print("floatArr : ${floatArr}");
         break;
 
       default:
